@@ -1,0 +1,1 @@
+// JS functions to handle login and auth
