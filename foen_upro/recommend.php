@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $time_match = !$eat_time || match_time($eat_time, $open_time, $close_time);
  
 
-    if ($distance <= 20000 && $price_match && $type_match && $time_match) {
+    if ($distance <= 5000 && $price_match && $type_match && $time_match) {
       $shop['distance'] = round($distance);
       $filtered[] = $shop;
     }

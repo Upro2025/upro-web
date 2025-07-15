@@ -36,7 +36,7 @@ foreach ($shops as $shop) {
 
         $distance = haversine($userLat, $userLng, $shop['latitude'], $shop['longitude']);
         
-        $matchDistance = $distance <= 20000; // ลอง 100 เมตรก่อน
+        $matchDistance = $distance <= 5000; // ลอง 100 เมตรก่อน
     }
 
     if ($matchKeyword && $matchDistance) {
