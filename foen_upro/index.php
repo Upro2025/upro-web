@@ -26,38 +26,37 @@ $data = json_decode($response->getBody(), true);
 ?>
 
 <script>
-  // ✅ ตรวจสอบว่ามี lat/lng ใน URL หรือยัง
+  // ตรวจว่า URL มีพิกัดหรือยัง
   function hasGeoParams() {
     const params = new URLSearchParams(window.location.search);
     return params.has("lat") && params.has("lng");
   }
 
-  // ✅ ขอพิกัดผู้ใช้แล้ว reload พร้อมแนบพิกัดใน URL
+  // ขอพิกัดแล้ว reload พร้อมแนบพิกัด
   function getLocationAndReload() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          const url = new URL(window.location.href);
-          url.searchParams.set("lat", lat);
-          url.searchParams.set("lng", lng);
-          window.location.href = url.toString(); // reload พร้อมค่าพิกัด
-        },
-        function (error) {
-          console.warn("⚠️ ไม่สามารถเข้าถึงตำแหน่งได้:", error.message);
-        }
-      );
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("lat", lat);
+        url.searchParams.set("lng", lng);
+        window.location.href = url.toString();
+      }, function (error) {
+        console.warn("⚠️ ไม่สามารถเข้าถึงตำแหน่ง:", error.message);
+      });
     } else {
       alert("เบราว์เซอร์ของคุณไม่รองรับ Geolocation");
     }
   }
 
-  // ✅ เรียกใช้ทันทีถ้ายังไม่มี lat/lng
+  // ถ้ายังไม่มี lat/lng → ขอแล้ว reload
   if (!hasGeoParams()) {
     getLocationAndReload();
   }
 </script>
+
 
 <main class="px-4 sm:px-6 md:px-10 py-6">
 <section class="text-center max-w-3xl mx-auto">
@@ -153,7 +152,7 @@ $data = json_decode($response->getBody(), true);
       foreach ($data as $shop) {
         if (isset($shop['lat']) && isset($shop['lng'])) {
           $distance = haversineDistance($userLat, $userLng, $shop['lat'], $shop['lng']);
-          if ($distance <= 1000) {
+          if ($distance <= 20000) {
             $hasNearby = true;
             ?>
             <div class="border rounded-xl overflow-hidden">
