@@ -5,66 +5,95 @@ $supabase_url = "https://pvojevkazwrkjdwqjgrw.supabase.co";
 $supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2b2pldmthendya2pkd3FqZ3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMzcyNTMsImV4cCI6MjA2NzkxMzI1M30.AonguMS1faIMvGJk2qDFBxsLosXuXW6j5r3HtHmccgU";
 include 'supabase.php';
 
-// ดึงข้อมูลร้าน
+// ✅ รับค่าพิกัดจาก GET ก่อน
+$userLat = isset($_GET['lat']) ? floatval($_GET['lat']) : null;
+$userLng = isset($_GET['lng']) ? floatval($_GET['lng']) : null;
+
+// ✅ ดึงข้อมูลร้านจาก Supabase
 $response = $client->request('GET', 'shops', [
     'headers' => [
-        'apikey' => $SUPABASE_ANON_KEY,
-        'Authorization' => 'Bearer ' . $SUPABASE_ANON_KEY,
+        'apikey' => $supabase_key,
+        'Authorization' => 'Bearer ' . $supabase_key,
         'Accept' => 'application/json',
     ],
     'query' => [
         'select' => '*',
-        'order' => 'created_at.desc',
-        'limit' => '*'
+        'order' => 'created_at.desc'
     ]
 ]);
 
 $data = json_decode($response->getBody(), true);
 ?>
 
-<main class="px-4 sm:px-6 md:px-8 py-8">
-  <!-- HERO -->
-  <section class="text-center max-w-3xl mx-auto">
+<script>
+  // ✅ ตรวจสอบว่ามี lat/lng ใน URL หรือยัง
+  function hasGeoParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params.has("lat") && params.has("lng");
+  }
+
+  // ✅ ขอพิกัดผู้ใช้แล้ว reload พร้อมแนบพิกัดใน URL
+  function getLocationAndReload() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const url = new URL(window.location.href);
+          url.searchParams.set("lat", lat);
+          url.searchParams.set("lng", lng);
+          window.location.href = url.toString(); // reload พร้อมค่าพิกัด
+        },
+        function (error) {
+          console.warn("⚠️ ไม่สามารถเข้าถึงตำแหน่งได้:", error.message);
+        }
+      );
+    } else {
+      alert("เบราว์เซอร์ของคุณไม่รองรับ Geolocation");
+    }
+  }
+
+  // ✅ เรียกใช้ทันทีถ้ายังไม่มี lat/lng
+  if (!hasGeoParams()) {
+    getLocationAndReload();
+  }
+</script>
+
+<main class="px-4 sm:px-6 md:px-10 py-6">
+<section class="text-center max-w-3xl mx-auto">
     <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f37021] mb-4">Discover Great Food Near You</h1>
     <p class="text-gray-600 mb-6">Find the best restaurants, exclusive deals, and delicious meals in your area</p>
-    <form method="GET" action="nearby.php" id="searchForm" class="flex flex-col md:flex-row gap-2 justify-center">
+    <form method="GET" action="search.php" id="searchForm" class="flex flex-col md:flex-row gap-2 justify-center">
       <input type="text" name="q" placeholder="Search restaurants..." 
              class="px-4 py-2 border border-gray-300 rounded-md w-full md:w-1/2 focus:ring-2 focus:ring-[#f37021] focus:outline-none" />
-      <input type="hidden" name="lat" id="lat">
-      <input type="hidden" name="lng" id="lng">
       <button type="submit"
         class="bg-[#f37021] text-white px-6 py-2 rounded-md flex items-center gap-2 hover:bg-orange-600 transition">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M17.657 16.657L13.414 12.414A6 6 0 1112 13.414l4.243 4.243a1 1 0 001.414-1.414zM10 16a6 6 0 100-12 6 6 0 000 12z" />
+            d="M17.657 16.657L13.414 12.414A6 6 0 1112 13.414l4.243 4.243a1 1 0 001.414-1.414z" />
         </svg>
-        <span>Find Near Me</span>
+        <span>Search</span>
       </button>
     </form>
-
-    <script>
-      const form = document.getElementById("searchForm");
-      const latInput = document.getElementById("lat");
-      const lngInput = document.getElementById("lng");
-
-      function getLocationAndSubmit() {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          latInput.value = position.coords.latitude;
-          lngInput.value = position.coords.longitude;
-          form.submit();
-        }, function (error) {
-          alert("\u26A0\uFE0F ไม่สามารถเข้าถึงตำแหน่งของคุณได้");
-        });
-      }
-
-      form.addEventListener("submit", function (e) {
-        if (!latInput.value || !lngInput.value) {
-          e.preventDefault();
-          getLocationAndSubmit();
-        }
-      });
-    </script>
   </section>
+
+  <!-- Banner Slide -->
+  <div class="mt-8">
+    <div class="relative overflow-hidden rounded-xl">
+      <div class="flex transition-transform duration-500" style="width: 300%; animation: slide 12s infinite;">
+        <img src="assets/banner1.jpg" class="w-full object-cover" />
+        <img src="assets/banner2.jpg" class="w-full object-cover" />
+        <img src="assets/banner3.jpg" class="w-full object-cover" />
+      </div>
+    </div>
+  </div>
+  <style>
+    @keyframes slide {
+      0%, 33%   { transform: translateX(0%); }
+      34%, 66%  { transform: translateX(-100%); }
+      67%, 100% { transform: translateX(-200%); }
+    }
+  </style>
 
   <!-- POPULAR CATEGORIES -->
   <section class="mt-12">
@@ -94,9 +123,68 @@ $data = json_decode($response->getBody(), true);
     </div>
   </section>
 
+  <!-- Google Ads #1 -->
+  <div class="mt-8 mb-8">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+
+  <!-- Nearby Shops -->
+<section class="mt-8">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl sm:text-2xl font-semibold">ร้านใกล้คุณ</h2>
+    <a href="nearby.php" class="text-sm text-[#f37021] hover:underline">ดูเพิ่มเติม</a>
+  </div>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+    <?php
+    function haversineDistance($lat1, $lng1, $lat2, $lng2) {
+      $earthRadius = 6371000; // meters
+      $dLat = deg2rad($lat2 - $lat1);
+      $dLng = deg2rad($lng2 - $lng1);
+      $a = sin($dLat / 2) * sin($dLat / 2) +
+           cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+           sin($dLng / 2) * sin($dLng / 2);
+      $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+      return $earthRadius * $c;
+    }
+
+    $hasNearby = false;
+
+    if (!is_null($userLat) && !is_null($userLng) && !empty($data)) {
+      foreach ($data as $shop) {
+        if (isset($shop['lat']) && isset($shop['lng'])) {
+          $distance = haversineDistance($userLat, $userLng, $shop['lat'], $shop['lng']);
+          if ($distance <= 1000) {
+            $hasNearby = true;
+            ?>
+            <div class="border rounded-xl overflow-hidden">
+              <img src="<?= htmlspecialchars($shop['image_url'] ?: 'assets/restaurant1.jpg') ?>" class="w-full h-36 object-cover" />
+              <div class="p-2">
+                <h4 class="font-semibold"><?= htmlspecialchars($shop['name']) ?></h4>
+              </div>
+            </div>
+            <?php
+          }
+        }
+      }
+    }
+
+    if (!$hasNearby) {
+      echo '<p class="text-gray-500 col-span-4 text-center">⚠️ ไม่สามารถระบุตำแหน่งของคุณได้ หรือไม่พบร้านในรัศมี 1 กิโลเมตร</p>';
+    }
+    ?>
+  </div>
+</section>
+
+
+  <!-- Google Ads #2 -->
+  <div class="mt-8 mb-8">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #2 ]</div>
+  </div>
+
+
   <!-- FEATURED RESTAURANTS -->
   <section class="mt-12">
-    <h2 class="text-xl sm:text-2xl font-semibold mb-4">Featured Restaurants</h2>
+    <h2 class="text-xl sm:text-2xl font-semibold mb-4">ร้านอาหารทั้งหมด</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <?php if (!empty($data)): ?>
         <?php foreach ($data as $shop): ?>
