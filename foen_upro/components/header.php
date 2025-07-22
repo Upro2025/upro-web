@@ -16,9 +16,10 @@ $current = basename($_SERVER['PHP_SELF']);
 <header class="sticky top-0 z-50 backdrop-blur bg-white/40 border-b border-gray-200 shadow-sm px-4 py-4">
   <div class="max-w-screen-xl mx-auto flex items-center justify-between">
     <!-- โลโก้ซ้าย -->
-    <div class="text-2xl font-bold select-none">
-      <span class="text-black">U</span><span class="text-[#f37021]">pro</span>
-    </div>
+    <a href="index.php" class="flex items-center gap-2 select-none text-2xl font-bold">
+  <img src="assets/logo.png" alt="Upro Logo" class="w-10 h-10 object-contain" />
+  <span class="text-black">U<span class="text-[#f37021]">pro</span></span>
+</a>
 
     <!-- ปุ่มเปิดเมนูมือถือ -->
     <button class="lg:hidden flex items-center px-2 text-gray-600 focus:outline-none" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">

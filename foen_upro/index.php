@@ -23,6 +23,39 @@ $response = $client->request('GET', 'shops', [
 ]);
 
 $data = json_decode($response->getBody(), true);
+
+// ดึงหมวดหมู่จาก Supabase (เฉพาะที่ไม่ว่าง และไม่ซ้ำ)
+$cat_url = "$supabase_url/rest/v1/shops?select=category";
+$ch_cat = curl_init($cat_url);
+curl_setopt($ch_cat, CURLOPT_HTTPHEADER, [
+  "apikey: $supabase_key",
+  "Authorization: Bearer $supabase_key"
+]);
+curl_setopt($ch_cat, CURLOPT_RETURNTRANSFER, true);
+$cat_response = curl_exec($ch_cat);
+curl_close($ch_cat);
+$cat_raw = json_decode($cat_response, true);
+
+// กรองหมวดหมู่ซ้ำและว่างออก
+$categoryLabels = array_unique(array_filter(array_map(fn($i) => trim($i['category'] ?? ''), $cat_raw)));
+
+// สร้างสีอัตโนมัติแบบสุ่ม (หรือกำหนด mapping เพิ่มก็ได้)
+$colors = ['red', 'orange', 'yellow', 'green', 'purple', 'blue', 'teal', 'pink', 'indigo', 'cyan'];
+
+shuffle($colors); // สลับสี
+
+$categories = [];
+$i = 0;
+foreach ($categoryLabels as $label) {
+  $color = $colors[$i % count($colors)];
+  $categories[] = [
+    'label' => $label,
+    'bg' => "$color-100",
+    'text' => "$color-600",
+    'icon' => 'M4 6h16M4 10h16M4 14h16M4 18h16' // 👈 คุณจะใช้ไอคอนเดียวกันหมด หรือลิงก์ mapping เองก็ได้
+  ];
+  $i++;
+}
 ?>
 
 <script>
@@ -59,9 +92,98 @@ $data = json_decode($response->getBody(), true);
 
 
 <main class="px-4 sm:px-6 md:px-10 py-6">
-<section class="text-center max-w-3xl mx-auto">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f37021] mb-4">Discover Great Food Near You</h1>
-    <p class="text-gray-600 mb-6">Find the best restaurants, exclusive deals, and delicious meals in your area</p>
+
+<!-- Banner Carousel -->
+<div class="relative mt-8 max-w-7xl mx-auto overflow-hidden rounded-xl group" id="carousel">
+  <!-- Slides wrapper -->
+  <div id="slides" class="flex transition-transform duration-700 ease-in-out w-[300%]">
+    <div class="w-full flex-shrink-0">
+      <img src="assets/banner1.jpg" alt="แบนเนอร์ 1" class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-cover" />
+    </div>
+    <div class="w-full flex-shrink-0">
+      <img src="assets/banner2.jpg" alt="แบนเนอร์ 2" class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-cover" />
+    </div>
+    <div class="w-full flex-shrink-0">
+      <img src="assets/banner3.png" alt="แบนเนอร์ 3" class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-cover" />
+    </div>
+  </div>
+
+  <!-- Dots -->
+  <div class="absolute bottom-4 w-full flex justify-center gap-2 z-10">
+    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="0"></button>
+    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="1"></button>
+    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="2"></button>
+  </div>
+
+  <!-- Navigation arrows -->
+  <button id="prev" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-80 p-2 rounded-full z-10 hidden group-hover:block">
+    &#10094;
+  </button>
+  <button id="next" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-80 p-2 rounded-full z-10 hidden group-hover:block">
+    &#10095;
+  </button>
+</div>
+
+
+<!-- Script -->
+<script>
+  const slides = document.getElementById("slides");
+  const dots = document.querySelectorAll(".dot");
+  const carousel = document.getElementById("carousel");
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+
+  let current = 0;
+  const total = dots.length;
+  let interval;
+
+  function updateSlide(index) {
+    current = index;
+    slides.style.transform = `translateX(-${100 * index}%)`;
+    dots.forEach(dot => dot.classList.remove("opacity-100"));
+    dots[index].classList.add("opacity-100");
+  }
+
+  function startAutoSlide() {
+    interval = setInterval(() => {
+      current = (current + 1) % total;
+      updateSlide(current);
+    }, 5000);
+  }
+
+  function stopAutoSlide() {
+    clearInterval(interval);
+  }
+
+  // Event bindings
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      updateSlide(parseInt(dot.dataset.index));
+    });
+  });
+
+  prev.addEventListener("click", () => {
+    current = (current - 1 + total) % total;
+    updateSlide(current);
+  });
+
+  next.addEventListener("click", () => {
+    current = (current + 1) % total;
+    updateSlide(current);
+  });
+
+  carousel.addEventListener("mouseenter", stopAutoSlide);
+  carousel.addEventListener("mouseleave", startAutoSlide);
+
+  // Init
+  updateSlide(0);
+  startAutoSlide();
+</script>
+
+<br>
+<section class="text-center max-w-3xl mx-auto"><br>
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f37021] mb-4">ค้นหาร้านอาหารที่คุณชอบได้เลย</h1>
+    <p class="text-gray-600 mb-6">สนุกกับการค้าหาร้านอาหาร คาเฟ่ และอื่นๆตามไลฟ์ไตล์ของคุณ</p>
     <form method="GET" action="search.php" id="searchForm" class="flex flex-col md:flex-row gap-2 justify-center">
       <input type="text" name="q" placeholder="Search restaurants..." 
              class="px-4 py-2 border border-gray-300 rounded-md w-full md:w-1/2 focus:ring-2 focus:ring-[#f37021] focus:outline-none" />
@@ -75,60 +197,37 @@ $data = json_decode($response->getBody(), true);
       </button>
     </form>
   </section>
-
-  <!-- Banner Slide -->
-  <div class="mt-8">
-    <div class="relative overflow-hidden rounded-xl">
-      <div class="flex transition-transform duration-500" style="width: 300%; animation: slide 12s infinite;">
-        <img src="assets/banner1.jpg" class="w-full object-cover" />
-        <img src="assets/banner2.jpg" class="w-full object-cover" />
-        <img src="assets/banner3.jpg" class="w-full object-cover" />
-      </div>
-    </div>
-  </div>
-  <style>
-    @keyframes slide {
-      0%, 33%   { transform: translateX(0%); }
-      34%, 66%  { transform: translateX(-100%); }
-      67%, 100% { transform: translateX(-200%); }
-    }
-  </style>
+<br>
 
   <!-- POPULAR CATEGORIES -->
-  <section class="mt-12">
-    <h2 class="text-xl sm:text-2xl font-semibold mb-4">Popular Categories</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      <?php
-      $categories = [
-        ['label' => 'Fine Dining', 'bg' => 'red-100', 'text' => 'red-600', 'icon' => 'M4 6h16M4 10h16M4 14h16M4 18h16'],
-        ['label' => 'Chef’s Table', 'bg' => 'orange-100', 'text' => 'orange-600', 'icon' => 'M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z'],
-        ['label' => 'Fast Food', 'bg' => 'yellow-100', 'text' => 'yellow-600', 'icon' => 'M5 12h14M9 16h6M7 20h10'],
-        ['label' => 'Food Truck', 'bg' => 'green-100', 'text' => 'green-600', 'icon' => 'M3 13l2-2h13l2 2v5H3v-5z'],
-        ['label' => 'Bar&Pub', 'bg' => 'purple-100', 'text' => 'purple-600', 'icon' => 'M12 3v18m-6 0h12'],
-        ['label' => 'Cafe', 'bg' => 'blue-100', 'text' => 'blue-600', 'icon' => 'M8 21h8m-4-2v-6m0 0a4 4 0 00-4-4h0a4 4 0 00-4 4h0a4 4 0 004 4z'],
-        ['label' => 'Buffet', 'bg' => 'teal-100', 'text' => 'teal-600', 'icon' => 'M3 10h18M9 21h6M12 3v18'],
-      ];
-      foreach ($categories as $cat):
-      ?>
-        <div class="rounded-xl border p-6 flex flex-col items-center hover:shadow-md transition">
-          <div class="bg-<?= $cat['bg'] ?> p-3 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-<?= $cat['text'] ?>" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="<?= $cat['icon'] ?>" />
-            </svg>
-          </div>
-          <p class="mt-2 font-semibold text-sm md:text-base text-center break-words"><?= $cat['label'] ?></p>
+  <section class="max-w-7xl mx-auto px-4">
+  <h2 class="text-xl sm:text-2xl font-semibold mb-4">ประเภทร้านอาหาร</h2>
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <?php foreach ($categories as $cat): ?>
+      <a href="search.php?category=<?= urlencode($cat['label']) ?>"
+         class="rounded-xl border p-6 flex flex-col items-center hover:shadow-md transition no-underline bg-white">
+        <div class="bg-<?= $cat['bg'] ?> p-3 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-<?= $cat['text'] ?>" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="<?= $cat['icon'] ?>" />
+          </svg>
         </div>
-      <?php endforeach; ?>
-    </div>
-  </section>
+        <p class="mt-2 font-semibold text-sm md:text-base text-center break-words text-<?= $cat['text'] ?>">
+          <?= htmlspecialchars($cat['label']) ?>
+        </p>
+      </a>
+    <?php endforeach; ?>
+  </div>
+</section>
 
+
+<br>
   <!-- Google Ads #1 -->
-  <div class="mt-8 mb-8">
+  <div class="max-w-7xl mx-auto px-4">
     <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
   </div>
-
+<br>
   <!-- Nearby Shops -->
-<section class="mt-8">
+<section class="max-w-7xl mx-auto px-4">
   <div class="flex justify-between items-center mb-4">
     <h2 class="text-xl sm:text-2xl font-semibold">ร้านใกล้คุณ</h2>
     <a href="nearby.php" class="text-sm text-[#f37021] hover:underline">ดูเพิ่มเติม</a>
@@ -162,7 +261,7 @@ $data = json_decode($response->getBody(), true);
               <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
               <?php if (!empty($shop['price'])): ?>
               <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
-                <span>เริ่มต้น</span>
+                <span>ราคาเริ่มต้น</span>
                 <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
                 <span>บาท</span>
               </div>
@@ -186,44 +285,45 @@ $data = json_decode($response->getBody(), true);
     ?>
   </div>
 </section>
-
+<br>
 
   <!-- Google Ads #2 -->
-  <div class="mt-8 mb-8">
+  <div class="max-w-7xl mx-auto px-4">
     <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #2 ]</div>
   </div>
 
 
   <!-- FEATURED RESTAURANTS -->
-  <section class="mt-12">
-    <h2 class="text-xl sm:text-2xl font-semibold mb-4">ร้านอาหารทั้งหมด</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-      <?php if (!empty($data)): ?>
-        <?php foreach ($data as $shop): ?>
-          <div class="rounded-xl overflow-hidden border hover:shadow-lg transition transform hover:-translate-y-1">
-            <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" alt="<?= htmlspecialchars($shop['name']) ?>">
-            <div class="p-4">
-              <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
-              <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
-              <?php if (!empty($shop['price'])): ?>
-              <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
-                <span>เริ่มต้น</span>
-                <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
-                <span>บาท</span>
-              </div>
-              <?php endif; ?>
-              <div class="flex justify-between items-center mt-4">
-                <span class="text-yellow-500">⭐ 4.5</span>
-                <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">View Details</a>
-              </div>
+<section class="mt-12">
+  <h2 class="text-xl max-w-7xl mx-auto sm:text-2xl font-semibold mb-4 px-4 sm:px-6">ร้านอาหารทั้งหมด</h2>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+    <?php if (!empty($data)): ?>
+      <?php foreach ($data as $shop): ?>
+        <div class="rounded-xl overflow-hidden border hover:shadow-lg transition transform hover:-translate-y-1">
+          <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" alt="<?= htmlspecialchars($shop['name']) ?>">
+          <div class="p-4">
+            <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
+            <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
+            <?php if (!empty($shop['price'])): ?>
+            <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
+              <span>ราคาเริ่มต้น</span>
+              <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
+              <span>บาท</span>
+            </div>
+            <?php endif; ?>
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-yellow-500">⭐ 4.5</span>
+              <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">View Details</a>
             </div>
           </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <p class="text-center text-gray-500 col-span-3">No restaurants found.</p>
-      <?php endif; ?>
-    </div>
-  </section>
+        </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p class="text-center text-gray-500 col-span-3">ไม่พบร้านอาหาร</p>
+    <?php endif; ?>
+  </div>
+</section>
+
 </main>
 
 <?php include 'components/footer.php'; ?>
