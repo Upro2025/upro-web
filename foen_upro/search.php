@@ -137,6 +137,13 @@ $topKeywords = array_keys(array_slice($log, 0, 5, true));
   </form>
 </section>
 
+<br>
+  <!-- Google Ads #1 -->
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+<br>
+
 <section class="max-w-screen-xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-16">
   <?php if (!$shops || count($shops) === 0): ?>
     <div class="col-span-full text-center text-gray-500 text-lg">ไม่พบผลลัพธ์</div>
@@ -169,6 +176,14 @@ $topKeywords = array_keys(array_slice($log, 0, 5, true));
     <?php endforeach; ?>
   <?php endif; ?>
 </section>
+
+<br>
+  <!-- Google Ads #1 -->
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+<br>
+
 </main>
 
 <?php include 'components/footer.php'; ?>

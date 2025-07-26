@@ -123,6 +123,48 @@ if (!is_array($categories)) {
     $categories = [];
 }
 
+// คัดกรองข้อมูลร้าน
+$filtered = [];
+if ($userLat && $userLng) {
+    foreach ($shops as $shop) {
+        // 1. กรองตามคำค้นหา
+        $matchKeyword = !$query ||
+            stripos($shop['name'], $query) !== false ||
+            stripos($shop['category'], $query) !== false;
+
+        // 2. กรองตามหมวดหมู่ที่เลือก
+        $matchCategory = !$category || stripos($shop['category'], $category) !== false;
+
+        // 3. คำนวณระยะทาง
+        $distance = null;
+        $distance_text = '';
+        $matchDistance = false;
+        if (isset($shop['latitude'], $shop['longitude']) &&
+            is_numeric($shop['latitude']) && is_numeric($shop['longitude'])) {
+            $distance = haversine($userLat, $userLng, $shop['latitude'], $shop['longitude']);
+            $matchDistance = $distance <= 5000;
+            $distance_text = ($distance < 1000) ? 
+                round($distance, 1) . ' เมตร' :
+                round($distance / 1000, 2) . ' กิโลเมตร';
+        }
+
+        // 4. กรองตามฟิลเตอร์
+        $matchFilter = true;
+        if ($filter === 'closest') {
+            $matchFilter = $matchDistance;
+        } elseif ($filter === 'latest') {
+            $matchFilter = true; // คุณอาจจะจัดเรียงตามเวลาทีหลัง
+        }
+
+        // 5. เพิ่มร้านที่ผ่านทุกเงื่อนไข
+        if ($matchKeyword && $matchCategory && $matchDistance && $matchFilter) {
+            $shop['distance'] = $distance_text; // เพิ่มระยะทางที่แสดงเป็นข้อความ
+            $filtered[] = $shop;
+        }
+    }
+}
+$data = $filtered; // ผลลัพธ์ที่กรองตามเงื่อนไข
+
 ?>
 
 <main class="px-4 sm:px-6 md:px-10 py-6">
@@ -176,6 +218,12 @@ if (!is_array($categories)) {
   </form>
 </section>
 
+<br>
+  <!-- Google Ads #1 -->
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+<br>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
     <?php if (!empty($data)): ?>
@@ -188,10 +236,16 @@ if (!is_array($categories)) {
                         <?= htmlspecialchars($shop['category']) ?>
                     </span>
                     <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
-                <span>ราคาเริ่มต้น</span>
-                <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
-                <span>บาท</span>
-              </div>
+                        <span>ราคาเริ่มต้น</span>
+                        <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
+                        <span>บาท</span>
+                    </div>
+
+                    <!-- แสดงระยะทางที่นี่ -->
+                    <p class="text-sm text-gray-600 mt-2">ระยะทาง: <?= htmlspecialchars($shop['distance']) ?></p>
+
+                    <p class="text-xs text-gray-400 mt-1">เปิด: <?= htmlspecialchars($shop['time_open']) ?> - <?= htmlspecialchars($shop['time_close']) ?></p>
+
                     <div class="flex justify-between items-center mt-4">
                         <span class="text-yellow-500">⭐ 4.5</span>
                         <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md">ดูเพิ่มเติม</a>
@@ -203,6 +257,14 @@ if (!is_array($categories)) {
         <p class="text-center text-gray-500 col-span-full">ไม่พบร้านใกล้คุณ</p>
     <?php endif; ?>
 </div>
+
+<br>
+  <!-- Google Ads #1 -->
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+<br>
+
 </main>
 
 <?php include 'components/footer.php'; ?>

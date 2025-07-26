@@ -95,6 +95,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
 }
+
+// ดึงหมวดหมู่จาก Supabase (เฉพาะที่ไม่ว่าง และไม่ซ้ำ)
+$cat_url = "$supabase_url/rest/v1/shops?select=category";
+$ch_cat = curl_init($cat_url);
+curl_setopt($ch_cat, CURLOPT_HTTPHEADER, [
+  "apikey: $supabase_key",
+  "Authorization: Bearer $supabase_key"
+]);
+curl_setopt($ch_cat, CURLOPT_RETURNTRANSFER, true);
+$cat_response = curl_exec($ch_cat);
+curl_close($ch_cat);
+$cat_raw = json_decode($cat_response, true);
+
+// กรองหมวดหมู่ซ้ำและว่างออก
+$categoryLabels = array_unique(array_filter(array_map(fn($i) => trim($i['category'] ?? ''), $cat_raw)));
+
+// สร้างสีอัตโนมัติแบบสุ่ม (หรือกำหนด mapping เพิ่มก็ได้)
+$colors = ['red', 'orange', 'yellow', 'green', 'purple', 'blue', 'teal', 'pink', 'indigo', 'cyan'];
+
+shuffle($colors); // สลับสี
+
+// สร้างรายการหมวดหมู่ที่มีข้อมูลสีและไอคอน
+$categories = [];
+$i = 0;
+foreach ($categoryLabels as $label) {
+  $color = $colors[$i % count($colors)];
+  $categories[] = [
+    'label' => $label,
+    'bg' => "$color-100",
+    'text' => "$color-600",
+    'icon' => 'M4 6h16M4 10h16M4 14h16M4 18h16' // คุณสามารถใช้ไอคอนเดียวกัน หรือเพิ่มไอคอนตามหมวดหมู่ได้
+  ];
+  $i++;
+}
 ?>
 
 <main class="px-4 py-10 max-w-2xl mx-auto">
@@ -110,29 +144,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </label>
 
     <label class="block">
-      <span class="font-semibold text-gray-700">ประเภทอาหาร:</span>
-      <select name="type" class="border border-gray-300 p-2 rounded w-full mt-1">
-        <option value="">เลือกประเภทอาหาร</option>
-        <option value="FastFood">Fast Food</option>
-        <option value="Cafe">Cafe</option>
-        <option value="Buffet">Buffet</option>
-        <option value="Bar&Pub">Bar&Pub</option>
-      </select>
-    </label>
+  <span class="font-semibold text-gray-700">ประเภทอาหาร:</span>
+  <select name="type" class="border border-gray-300 p-2 rounded w-full mt-1">
+    <option value="">เลือกประเภทอาหาร</option>
+    <?php foreach ($categories as $category): ?>
+      <option value="<?= htmlspecialchars($category['label']) ?>" class="text-<?= htmlspecialchars($category['text']) ?>">
+        <?= htmlspecialchars($category['label']) ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</label>
 
     <label class="block">
-      <span class="font-semibold text-gray-700">เวลาที่อยากกิน:</span>
-      <select name="eat_time" class="border border-gray-300 p-2 rounded w-full mt-1">
-        <option value="">- เลือกช่วงเวลา -</option>
-        <option value="breakfast">เช้า</option>
-        <option value="lunch">เที่ยง</option>
-        <option value="dinner">เย็น</option>
-        <option value="nigth">กลางคืน</option>
-      </select>
-    </label>
+  <span class="font-semibold text-gray-700">เวลาที่อยากกิน:</span>
+  <select name="eat_time" class="border border-gray-300 p-2 rounded w-full mt-1">
+    <option value="">- เลือกช่วงเวลา -</option>
+    <option value="breakfast" class="text-red-600 bg-red-100">เช้า</option>
+    <option value="lunch" class="text-orange-600 bg-orange-100">เที่ยง</option>
+    <option value="dinner" class="text-yellow-600 bg-yellow-100">เย็น</option>
+    <option value="nigth" class="text-green-600 bg-green-100">กลางคืน</option>
+  </select>
+</label>
 
     <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600 transition w-full font-semibold text-lg">แสดงร้านที่ตรงกับคุณ</button>
   </form>
+
+<br>
+  <!-- Google Ads #1 -->
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+<br>
+
 </main>
 
 <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
@@ -170,6 +213,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php endif; ?>
 </section>
 <?php endif; ?>
+
+<br>
+  <!-- Google Ads #1 -->
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+<br>
+
 </main>
 
 <script>
