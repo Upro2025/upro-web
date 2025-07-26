@@ -247,7 +247,7 @@ $data = $filtered; // ผลลัพธ์ที่กรองตามเง�
                     <p class="text-xs text-gray-400 mt-1">เปิด: <?= htmlspecialchars($shop['time_open']) ?> - <?= htmlspecialchars($shop['time_close']) ?></p>
 
                     <div class="flex justify-between items-center mt-4">
-                        <span class="text-yellow-500">⭐ 4.5</span>
+                        <!-- Nearby Shops <span class="text-yellow-500">⭐ 4.5</span>-->
                         <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md">ดูเพิ่มเติม</a>
                     </div>
                 </div>

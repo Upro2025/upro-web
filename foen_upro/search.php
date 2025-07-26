@@ -5,7 +5,7 @@
   $supabase_url = "https://pvojevkazwrkjdwqjgrw.supabase.co";
   $supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2b2pldmthendya2pkd3FqZ3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMzcyNTMsImV4cCI6MjA2NzkxMzI1M30.AonguMS1faIMvGJk2qDFBxsLosXuXW6j5r3HtHmccgU";
 
-$keyword = trim($_GET['q'] ?? '');
+  $keyword = trim($_GET['q'] ?? '');
   $category = trim($_GET['category'] ?? '');
   $filter = $_GET['filter'] ?? '';
 
@@ -80,7 +80,7 @@ $keyword = trim($_GET['q'] ?? '');
     file_put_contents($log_path, json_encode($log, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
   }
   arsort($log);
-$topKeywords = array_keys(array_slice($log, 0, 5, true));
+  $topKeywords = array_keys(array_slice($log, 0, 5, true));
 ?>
 
 <script>
@@ -100,89 +100,89 @@ $topKeywords = array_keys(array_slice($log, 0, 5, true));
 </script>
 
 <main class="px-4 sm:px-6 md:px-10 py-6">
-<section class="text-center max-w-3xl mx-auto mt-8 px-4">
-  <form method="GET" action="search.php" class="flex flex-col gap-2 justify-center mb-6">
-    <input type="text" name="q" value="<?= htmlspecialchars($keyword) ?>" placeholder="ค้นหาร้าน..."
-           class="px-4 py-2 border border-gray-300 rounded-md w-full focus:ring-2 focus:ring-[#f37021]" />
+  <!-- Search Form -->
+  <section class="text-center max-w-3xl mx-auto mt-8 px-4">
+    <form method="GET" action="search.php" class="flex flex-col gap-2 justify-center mb-6">
+      <input type="text" name="q" value="<?= htmlspecialchars($keyword) ?>" placeholder="ค้นหาร้าน..."
+             class="px-4 py-2 border border-gray-300 rounded-md w-full focus:ring-2 focus:ring-[#f37021]" />
 
-<?php if (count($topKeywords)): ?>
-  <div class="mt-4 text-sm text-gray-600">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="font-medium whitespace-nowrap">คำยอดนิยม:</span>
-      <?php foreach ($topKeywords as $k): ?>
-        <a href="?q=<?= urlencode($k) ?>"
-           class="px-4 py-2 rounded-full border border-[#f37021] text-[#f37021] bg-white hover:bg-[#f37021] hover:text-white transition whitespace-nowrap">
-          <?= htmlspecialchars($k) ?>
-        </a>
-      <?php endforeach; ?>
-    </div>
-  </div>
-<?php endif; ?>
-
-    <button type="submit" class="bg-[#f37021] text-white px-6 py-2 rounded-md hover:bg-orange-600 transition">ค้นหา</button>
-
-    <div class="flex flex-wrap gap-2 justify-center mt-4">
-      <button type="submit" name="filter" value="closest"
-        class="px-4 py-2 rounded-full border <?= $filter === 'closest' ? 'bg-[#f37021] text-white' : 'bg-white text-[#f37021]' ?>">ใกล้เคียงที่สุด</button>
-      <button type="submit" name="filter" value="latest"
-        class="px-4 py-2 rounded-full border <?= $filter === 'latest' ? 'bg-[#f37021] text-white' : 'bg-white text-[#f37021]' ?>">ล่าสุด</button>
-      <?php foreach ($categories as $cat): ?>
-        <button type="submit" name="category" value="<?= htmlspecialchars($cat) ?>"
-          class="px-4 py-2 rounded-full border <?= $category === $cat ? 'bg-[#f37021] text-white' : 'bg-white text-[#f37021]' ?>">
-          <?= htmlspecialchars($cat) ?>
-        </button>
-      <?php endforeach; ?>
-    </div>
-
-  </form>
-</section>
-
-<br>
-  <!-- Google Ads #1 -->
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
-  </div>
-<br>
-
-<section class="max-w-screen-xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-16">
-  <?php if (!$shops || count($shops) === 0): ?>
-    <div class="col-span-full text-center text-gray-500 text-lg">ไม่พบผลลัพธ์</div>
-  <?php else: ?>
-    <?php foreach ($shops as $shop): ?>
-      <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-        <img src="<?= htmlspecialchars($shop['image_url'] ?? 'assets/noimg.jpg') ?>"
-             alt="<?= htmlspecialchars($shop['name']) ?>"
-             class="w-full h-48 object-cover" />
-        <div class="p-4">
-          <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
-          <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md">
-            <?= htmlspecialchars($shop['category']) ?>
-          </span>
-          <?php if (!empty($shop['price'])): ?>
-          <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
-            <span>ราคาเริ่มต้น</span>
-            <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
-            <span>บาท</span>
-          </div>
-          <?php endif; ?>
-          <div class="flex justify-between items-center mt-4">
-            <span class="text-yellow-500">⭐ 4.5</span>
-            <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">
-              View Details
-            </a>
+      <?php if (count($topKeywords)): ?>
+        <div class="mt-4 text-sm text-gray-600">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-medium whitespace-nowrap">คำยอดนิยม:</span>
+            <?php foreach ($topKeywords as $k): ?>
+              <a href="?q=<?= urlencode($k) ?>"
+                 class="px-4 py-2 rounded-full border border-[#f37021] text-[#f37021] bg-white hover:bg-[#f37021] hover:text-white transition whitespace-nowrap">
+                <?= htmlspecialchars($k) ?>
+              </a>
+            <?php endforeach; ?>
           </div>
         </div>
-      </div>
-    <?php endforeach; ?>
-  <?php endif; ?>
-</section>
+      <?php endif; ?>
 
-<br>
-  <!-- Google Ads #1 -->
+      <button type="submit" class="bg-[#f37021] text-white px-6 py-2 rounded-md hover:bg-orange-600 transition">ค้นหา</button>
+
+      <!-- Filter and Category Buttons -->
+      <div class="flex flex-wrap gap-2 justify-center mt-4">
+        <button type="submit" name="filter" value="closest"
+          class="px-4 py-2 rounded-full border <?= $filter === 'closest' ? 'bg-[#f37021] text-white' : 'bg-white text-[#f37021]' ?>">ใกล้เคียงที่สุด</button>
+        <button type="submit" name="filter" value="latest"
+          class="px-4 py-2 rounded-full border <?= $filter === 'latest' ? 'bg-[#f37021] text-white' : 'bg-white text-[#f37021]' ?>">ล่าสุด</button>
+        <?php foreach ($categories as $cat): ?>
+          <button type="submit" name="category" value="<?= htmlspecialchars($cat) ?>"
+            class="px-4 py-2 rounded-full border <?= $category === $cat ? 'bg-[#f37021] text-white' : 'bg-white text-[#f37021]' ?>">
+            <?= htmlspecialchars($cat) ?>
+          </button>
+        <?php endforeach; ?>
+      </div>
+    </form>
+  </section>
+
+  <br>
   <div class="max-w-7xl mx-auto px-4">
     <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
   </div>
-<br>
+  <br>
+
+  <!-- Display Shops -->
+  <section class="max-w-screen-xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-16">
+    <?php if (!$shops || count($shops) === 0): ?>
+      <div class="col-span-full text-center text-gray-500 text-lg">ไม่พบผลลัพธ์</div>
+    <?php else: ?>
+      <?php foreach ($shops as $shop): ?>
+        <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+          <img src="<?= htmlspecialchars($shop['image_url'] ?? 'assets/noimg.jpg') ?>"
+               alt="<?= htmlspecialchars($shop['name']) ?>"
+               class="w-full h-48 object-cover" />
+          <div class="p-4">
+            <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
+            <span class="inline-block bg-orange-100 text-orange-500 text-sm px-2 py-1 mt-1 rounded-md">
+              <?= htmlspecialchars($shop['category']) ?>
+            </span>
+            <?php if (!empty($shop['price'])): ?>
+              <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
+                <span>ราคาเริ่มต้น</span>
+                <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
+                <span>บาท</span>
+              </div>
+            <?php endif; ?>
+            <div class="flex justify-between items-center mt-4">
+              <!-- Display Shops <span class="text-yellow-500">⭐ 4.5</span>-->
+              <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    <?php endif; ?>
+  </section>
+
+  <br>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
+  </div>
+  <br>
 
 </main>
 

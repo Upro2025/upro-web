@@ -90,7 +90,6 @@ foreach ($categoryLabels as $label) {
   }
 </script>
 
-
 <main class="px-4 sm:px-6 md:px-10 py-6">
 
 <!-- Banner Carousel -->
@@ -219,13 +218,14 @@ foreach ($categoryLabels as $label) {
   </div>
 </section>
 
-
 <br>
-  <!-- Google Ads #1 -->
+
+<!-- Google Ads #1 -->
   <div class="max-w-7xl mx-auto px-4">
     <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
   </div>
 <br>
+
   <!-- Nearby Shops -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="flex justify-between items-center mb-4">
@@ -267,7 +267,7 @@ foreach ($categoryLabels as $label) {
               </div>
               <?php endif; ?>
               <div class="flex justify-between items-center mt-4">
-                <span class="text-yellow-500">⭐ 4.5</span>
+                <!-- Nearby Shops <span class="text-yellow-500">⭐ 4.5</span>-->
                 <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">View Details</a>
               </div>
             </div>
@@ -287,7 +287,7 @@ foreach ($categoryLabels as $label) {
 </section>
 <br>
 
-  <!-- Google Ads #2 -->
+<!-- Google Ads #2 -->
   <div class="max-w-7xl mx-auto px-4">
     <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #2 ]</div>
   </div>
@@ -312,7 +312,7 @@ foreach ($categoryLabels as $label) {
             </div>
             <?php endif; ?>
             <div class="flex justify-between items-center mt-4">
-              <span class="text-yellow-500">⭐ 4.5</span>
+              <!-- Nearby Shops <span class="text-yellow-500">⭐ 4.5</span>-->
               <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">View Details</a>
             </div>
           </div>
