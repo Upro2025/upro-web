@@ -254,24 +254,21 @@ foreach ($categoryLabels as $label) {
       if ($distance <= 5000) {
         $hasNearby = true;
         ?>
-        <div class="rounded-xl overflow-hidden border hover:shadow-lg transition transform hover:-translate-y-1">
-            <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" alt="<?= htmlspecialchars($shop['name']) ?>">
-            <div class="p-4">
-              <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
-              <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
-              <?php if (!empty($shop['price'])): ?>
-              <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
+        <a href="shop.php?id=<?= $shop['id'] ?>" class="rounded-xl overflow-hidden border hover:shadow-lg transition transform hover:-translate-y-1">
+    <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" alt="<?= htmlspecialchars($shop['name']) ?>">
+    <div class="p-4">
+        <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
+        <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
+        <?php if (!empty($shop['price'])): ?>
+            <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
                 <span>ราคาเริ่มต้น</span>
                 <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
                 <span>บาท</span>
-              </div>
-              <?php endif; ?>
-              <div class="flex justify-between items-center mt-4">
-                <!-- Nearby Shops <span class="text-yellow-500">⭐ 4.5</span>-->
-                <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">View Details</a>
-              </div>
             </div>
-          </div>
+        <?php endif; ?>
+    </div>
+</a>
+
         <?php
       }
     }
@@ -299,24 +296,21 @@ foreach ($categoryLabels as $label) {
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
     <?php if (!empty($data)): ?>
       <?php foreach ($data as $shop): ?>
-        <div class="rounded-xl overflow-hidden border hover:shadow-lg transition transform hover:-translate-y-1">
-          <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" alt="<?= htmlspecialchars($shop['name']) ?>">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
-            <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
-            <?php if (!empty($shop['price'])): ?>
+        <a href="shop.php?id=<?= $shop['id'] ?>" class="rounded-xl overflow-hidden border hover:shadow-lg transition transform hover:-translate-y-1">
+    <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" alt="<?= htmlspecialchars($shop['name']) ?>">
+    <div class="p-4">
+        <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
+        <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
+        <?php if (!empty($shop['price'])): ?>
             <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
-              <span>ราคาเริ่มต้น</span>
-              <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
-              <span>บาท</span>
+                <span>ราคาเริ่มต้น</span>
+                <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
+                <span>บาท</span>
             </div>
-            <?php endif; ?>
-            <div class="flex justify-between items-center mt-4">
-              <!-- Nearby Shops <span class="text-yellow-500">⭐ 4.5</span>-->
-              <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md hover:bg-orange-600">View Details</a>
-            </div>
-          </div>
-        </div>
+        <?php endif; ?>
+    </div>
+</a>
+
       <?php endforeach; ?>
     <?php else: ?>
       <p class="text-center text-gray-500 col-span-3">ไม่พบร้านอาหาร</p>

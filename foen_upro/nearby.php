@@ -228,30 +228,27 @@ $data = $filtered; // ผลลัพธ์ที่กรองตามเง�
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
     <?php if (!empty($data)): ?>
         <?php foreach ($data as $shop): ?>
-            <div class="rounded-xl border hover:shadow-md">
-                <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" />
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
-                    <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md">
-                        <?= htmlspecialchars($shop['category']) ?>
-                    </span>
-                    <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
-                        <span>ราคาเริ่มต้น</span>
-                        <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
-                        <span>บาท</span>
-                    </div>
-
-                    <!-- แสดงระยะทางที่นี่ -->
-                    <p class="text-sm text-gray-600 mt-2">ระยะทาง: <?= htmlspecialchars($shop['distance']) ?></p>
-
-                    <p class="text-xs text-gray-400 mt-1">เปิด: <?= htmlspecialchars($shop['time_open']) ?> - <?= htmlspecialchars($shop['time_close']) ?></p>
-
-                    <div class="flex justify-between items-center mt-4">
-                        <!-- Nearby Shops <span class="text-yellow-500">⭐ 4.5</span>-->
-                        <a href="shop.php?id=<?= $shop['id'] ?>" class="bg-[#f37021] text-white px-3 py-1 rounded-md">ดูเพิ่มเติม</a>
-                    </div>
+            <a href="shop.php?id=<?= $shop['id'] ?>" class="rounded-xl overflow-hidden border hover:shadow-lg transition transform hover:-translate-y-1">
+    <img src="<?= $shop['image_url'] ?: 'assets/restaurant1.jpg' ?>" class="w-full h-48 object-cover" alt="<?= htmlspecialchars($shop['name']) ?>">
+    <div class="p-4">
+        <h3 class="font-semibold text-lg line-clamp-1"><?= htmlspecialchars($shop['name']) ?></h3>
+        <span class="inline-block bg-red-100 text-red-600 text-sm px-2 py-1 mt-1 rounded-md"><?= htmlspecialchars($shop['category']) ?></span>
+        <?php if (!empty($shop['price'])): ?>
+            <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
+                <span>ราคาเริ่มต้น</span>
+                <span class="text-xl font-bold text-[#f37021]"><?= htmlspecialchars($shop['price']) ?></span>
+                <span>บาท</span>
                 </div>
+                <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
+                <!-- แสดงระยะทางที่นี่ --> 
+                 <p class="text-sm text-gray-600 mt-2">ระยะทาง: <?= htmlspecialchars($shop['distance']) ?></p>
+                 </div>
+                 <div class="mt-2 text-sm text-gray-700 font-medium flex items-baseline gap-1">
+                 <p class="text-xs text-gray-400 mt-1">เปิด: <?= htmlspecialchars($shop['time_open']) ?> - <?= htmlspecialchars($shop['time_close']) ?></p>
             </div>
+        <?php endif; ?>
+    </div>
+</a>
         <?php endforeach; ?>
     <?php else: ?>
         <p class="text-center text-gray-500 col-span-full">ไม่พบร้านใกล้คุณ</p>
