@@ -58,6 +58,25 @@ foreach ($categoryLabels as $label) {
 }
 ?>
 
+<head>
+  <!-- Title and Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ร้านอาหารที่ตรงกับคุณ">
+  <title>Upro - ร้านอาหารที่ตรงกับคุณ</title>
+
+  <!-- Meta for adding the site to home screen -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f37021">
+
+  <!-- For icon (e.g., 192x192 px) -->
+  <link rel="icon" type="image/png" href="/assets/logo.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+
 <script>
   // ตรวจว่า URL มีพิกัดหรือยัง
   function hasGeoParams() {
@@ -319,5 +338,19 @@ foreach ($categoryLabels as $label) {
 </section>
 
 </main>
+
+<script>
+// ตรวจสอบว่าเบราว์เซอร์รองรับ Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then((registration) => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      }).catch((error) => {
+        console.log('Service Worker registration failed:', error);
+      });
+  });
+}
+</script>
 
 <?php include 'components/footer.php'; ?>
