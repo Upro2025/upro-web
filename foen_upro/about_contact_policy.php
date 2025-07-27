@@ -2,6 +2,11 @@
 
 <main class="max-w-4xl mx-auto px-4 py-12 space-y-16 text-gray-800">
 
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/1.png" alt="แบนเนอร์ 1"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
+  <br>
   <!-- About Section -->
   <section id="about">
     <h2 class="text-3xl font-bold text-gray-900 mb-4">เกี่ยวกับ Upro</h2>
@@ -15,7 +20,12 @@
       พร้อมเปิดโอกาสให้ธุรกิจท้องถิ่นเติบโตอย่างยั่งยืน
     </p>
   </section>
-
+<br>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/2.png" alt="แบนเนอร์ 2"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
+  <br>
   <!-- Contact Section -->
   <section id="contact">
     <h2 class="text-3xl font-bold text-gray-900 mb-4">ติดต่อเรา</h2>
@@ -43,7 +53,12 @@
       <p><strong>เวลาทำการ:</strong> ทุกวัน 09:00 - 18:00 น.</p>
     </div>
   </section>
-
+<br>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/3.png" alt="แบนเนอร์ 3"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
+  <br>
   <!-- Privacy Policy Section -->
   <section id="privacy">
     <h2 class="text-3xl font-bold text-gray-900 mb-4">นโยบายความเป็นส่วนตัว</h2>
@@ -58,7 +73,12 @@
     <p class="mt-4 text-gray-700">
       การใช้งานเว็บไซต์นี้ถือว่าคุณยอมรับนโยบายความเป็นส่วนตัวฉบับนี้
     </p>
-
+<br>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/4.png" alt="แบนเนอร์ 4"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
+  <br>
     <!-- เพิ่มเนื้อหากฎหมายที่เกี่ยวข้อง -->
     <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">กฎหมายที่เกี่ยวข้องกับเว็บไซต์</h3>
     <p class="text-gray-700 mb-2">
@@ -74,7 +94,12 @@
       โดยการใช้งานเว็บไซต์นี้ คุณยอมรับว่าคุณจะปฏิบัติตามกฎระเบียบที่เกี่ยวข้องกับการคุ้มครองข้อมูลส่วนบุคคล และข้อกำหนดของ Google
     </p>
   </section>
-
+<br>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/5.png" alt="แบนเนอร์ 5"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
+  <br>
 </main>
 
 <?php include 'components/footer.php'; ?>
