@@ -172,9 +172,10 @@ foreach ($categoryLabels as $label) {
   <br>
 
   <!-- Google Ads #1 -->
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
-  </div>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/1.png" alt="แบนเนอร์ 1"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
 
   <br>
 </main>
@@ -222,9 +223,10 @@ foreach ($categoryLabels as $label) {
 <br>
 
   <!-- Google Ads #1 -->
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
-  </div>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/2.png" alt="แบนเนอร์ 2"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
 <br>
 
 </main>

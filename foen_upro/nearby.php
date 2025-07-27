@@ -220,9 +220,10 @@ $data = $filtered; // ผลลัพธ์ที่กรองตามเง�
 
 <br>
   <!-- Google Ads #1 -->
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
-  </div>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/4.png" alt="แบนเนอร์ 4"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
 <br>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -257,9 +258,10 @@ $data = $filtered; // ผลลัพธ์ที่กรองตามเง�
 
 <br>
   <!-- Google Ads #1 -->
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
-  </div>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/5.png" alt="แบนเนอร์ 5"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
 <br>
 
 </main>

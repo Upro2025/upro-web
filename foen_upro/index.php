@@ -66,7 +66,7 @@ foreach ($categoryLabels as $label) {
   <title>Upro - ร้านอาหารที่ตรงกับคุณ</title>
 
   <!-- Meta for adding the site to home screen -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/upro/foen_upro/manifest.json">
   <meta name="theme-color" content="#f37021">
 
   <!-- For icon (e.g., 192x192 px) -->
@@ -112,17 +112,28 @@ foreach ($categoryLabels as $label) {
 <main class="px-4 sm:px-6 md:px-10 py-6">
 
 <!-- Banner Carousel -->
-<div class="relative mt-8 max-w-7xl mx-auto overflow-hidden rounded-xl group" id="carousel">
+<div class="relative mt-8 max-w-7xl mx-auto overflow-hidden rounded-xl group bg-black" id="carousel">
   <!-- Slides wrapper -->
-  <div id="slides" class="flex transition-transform duration-700 ease-in-out w-[300%]">
-    <div class="w-full flex-shrink-0">
-      <img src="assets/banner1.jpg" alt="แบนเนอร์ 1" class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-cover" />
+  <div id="slides" class="flex transition-transform duration-700 ease-in-out w-full">
+    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+      <img src="assets/1.png" alt="แบนเนอร์ 1"
+        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
     </div>
-    <div class="w-full flex-shrink-0">
-      <img src="assets/banner2.jpg" alt="แบนเนอร์ 2" class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-cover" />
+    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+      <img src="assets/2.png" alt="แบนเนอร์ 2"
+        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
     </div>
-    <div class="w-full flex-shrink-0">
-      <img src="assets/banner3.png" alt="แบนเนอร์ 3" class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-cover" />
+    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+      <img src="assets/3.png" alt="แบนเนอร์ 3"
+        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
+    </div>
+    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+      <img src="assets/4.png" alt="แบนเนอร์ 4"
+        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
+    </div>
+    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+      <img src="assets/5.png" alt="แบนเนอร์ 5"
+        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
     </div>
   </div>
 
@@ -131,6 +142,8 @@ foreach ($categoryLabels as $label) {
     <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="0"></button>
     <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="1"></button>
     <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="2"></button>
+    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="3"></button>
+    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="4"></button>
   </div>
 
   <!-- Navigation arrows -->
@@ -141,7 +154,6 @@ foreach ($categoryLabels as $label) {
     &#10095;
   </button>
 </div>
-
 
 <!-- Script -->
 <script>
@@ -198,6 +210,8 @@ foreach ($categoryLabels as $label) {
   startAutoSlide();
 </script>
 
+
+
 <br>
 <section class="text-center max-w-3xl mx-auto"><br>
     <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f37021] mb-4">ค้นหาร้านอาหารที่คุณชอบได้เลย</h1>
@@ -240,10 +254,10 @@ foreach ($categoryLabels as $label) {
 <br>
 
 <!-- Google Ads #1 -->
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #1 ]</div>
-  </div>
-<br>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/2.png" alt="แบนเนอร์ 2"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
 
   <!-- Nearby Shops -->
 <section class="max-w-7xl mx-auto px-4">
@@ -296,7 +310,7 @@ foreach ($categoryLabels as $label) {
 
 
     if (!$hasNearby) {
-      echo '<p class="text-gray-500 col-span-4 text-center">⚠️ ไม่สามารถระบุตำแหน่งของคุณได้ หรือไม่พบร้านในรัศมี 1 กิโลเมตร</p>';
+      echo '<p class="text-gray-500 col-span-4 text-center">⚠️ ไม่สามารถระบุตำแหน่งของคุณได้ หรือไม่พบร้านในรัศมี 1 กิโลเมตร กรุณาเปิดในบราวเซอร์</p>';
     }
     ?>
   </div>
@@ -304,9 +318,10 @@ foreach ($categoryLabels as $label) {
 <br>
 
 <!-- Google Ads #2 -->
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="bg-gray-100 h-32 flex items-center justify-center text-gray-500">[ Google Ads Banner #2 ]</div>
-  </div>
+  <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
+  <img src="assets/3.png" alt="แบนเนอร์ 3"
+    class="w-full h-32 sm:h-48 md:h-72 lg:h-[200px] object-contain bg-white " />
+</div>
 
 
   <!-- FEATURED RESTAURANTS -->

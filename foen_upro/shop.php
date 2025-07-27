@@ -102,10 +102,9 @@ $menus = json_decode($menu_result, true);
 
             <!-- Google Ads (Separate from Shop Details) -->
             <div class="w-full md:w-full flex-shrink-0 mt-6 md:mt-0">
-                <div class="bg-gray-50 rounded-lg border shadow p-4 text-center">
-                    <span class="font-semibold text-gray-600 text-xs">Google Ads</span>
-                    <div class="my-2 h-20 bg-gray-200 rounded animate-pulse"></div>
-                    <span class="text-xs text-gray-400">พื้นที่โฆษณา</span>
+                <div class="bg-gray-100 rounded-lg p-">
+  <img src="assets/4.png" alt="แบนเนอร์ 4"
+    >
                 </div>
             </div>
         </div>
