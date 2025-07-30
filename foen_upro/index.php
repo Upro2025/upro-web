@@ -112,45 +112,46 @@ foreach ($categoryLabels as $label) {
 <main class="px-4 sm:px-6 md:px-10 py-6">
 
 <!-- Banner Carousel -->
-<div class="relative mt-8 max-w-7xl mx-auto overflow-hidden rounded-xl group bg-black" id="carousel">
+<div class="relative mt-8 max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-4xl mx-auto overflow-hidden rounded-xl group bg-black
+    h-39 sm:h-59 md:h-71 lg:h-[280x] xl:h-[280px]" id="carousel">
   <!-- Slides wrapper -->
-  <div id="slides" class="flex transition-transform duration-700 ease-in-out w-full">
-    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+  <div id="slides" class="flex transition-transform duration-700 ease-in-out w-full h-full">
+    <div class="w-full flex-shrink-0 overflow-hidden h-full">
       <img src="assets/1.png" alt="แบนเนอร์ 1"
-        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
+        class="w-full h-full object-contain bg-white" />
     </div>
-    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+    <div class="w-full flex-shrink-0 overflow-hidden h-full">
       <img src="assets/2.png" alt="แบนเนอร์ 2"
-        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
+        class="w-full h-full object-contain bg-white" />
     </div>
-    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+    <div class="w-full flex-shrink-0 overflow-hidden h-full">
       <img src="assets/3.png" alt="แบนเนอร์ 3"
-        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
+        class="w-full h-full object-contain bg-white" />
     </div>
-    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+    <div class="w-full flex-shrink-0 overflow-hidden h-full">
       <img src="assets/4.png" alt="แบนเนอร์ 4"
-        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
+        class="w-full h-full object-contain bg-white" />
     </div>
-    <div class="w-full flex-shrink-0 overflow-hidden" style="border-radius:0%;">
+    <div class="w-full flex-shrink-0 overflow-hidden h-full">
       <img src="assets/5.png" alt="แบนเนอร์ 5"
-        class="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-contain bg-white" />
+        class="w-full h-full object-contain bg-white" />
     </div>
   </div>
 
   <!-- Dots -->
-  <div class="absolute bottom-4 w-full flex justify-center gap-2 z-10">
-    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="0"></button>
-    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="1"></button>
-    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="2"></button>
-    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="3"></button>
-    <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="4"></button>
+  <div class="absolute bottom-3 sm:bottom-4 w-full flex justify-center gap-2 z-10">
+    <button class="dot w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="0"></button>
+    <button class="dot w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="1"></button>
+    <button class="dot w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="2"></button>
+    <button class="dot w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="3"></button>
+    <button class="dot w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition" data-index="4"></button>
   </div>
 
   <!-- Navigation arrows -->
-  <button id="prev" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-80 p-2 rounded-full z-10 hidden group-hover:block">
+  <button id="prev" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-60 hover:bg-opacity-90 p-1.5 sm:p-2 rounded-full z-10 hidden group-hover:block text-xl">
     &#10094;
   </button>
-  <button id="next" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-80 p-2 rounded-full z-10 hidden group-hover:block">
+  <button id="next" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-60 hover:bg-opacity-90 p-1.5 sm:p-2 rounded-full z-10 hidden group-hover:block text-xl">
     &#10095;
   </button>
 </div>
@@ -214,7 +215,7 @@ foreach ($categoryLabels as $label) {
 
 <br>
 <section class="text-center max-w-3xl mx-auto"><br>
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f37021] mb-4">ค้นหาร้านอาหารที่คุณชอบได้เลย</h1>
+    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#f37021] mb-4">ค้นหาร้านอาหารที่คุณชอบ</h1>
     <p class="text-gray-600 mb-6">สนุกกับการค้าหาร้านอาหาร คาเฟ่ และอื่นๆตามไลฟ์ไตล์ของคุณ</p>
     <form method="GET" action="search.php" id="searchForm" class="flex flex-col md:flex-row gap-2 justify-center">
       <input type="text" name="q" placeholder="Search restaurants..." 
