@@ -10,6 +10,13 @@ $current = basename($_SERVER['PHP_SELF']);
   <title>Upro Food Finder</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/logo.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/assets/logo.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <!-- Optional: สำหรับเบราว์เซอร์เก่ามาก -->
+  <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
+
 </head>
 <body class="bg-white text-gray-800">
 
