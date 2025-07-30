@@ -59,23 +59,24 @@ foreach ($categoryLabels as $label) {
 ?>
 
 <head>
-  <!-- Title and Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="ร้านอาหารที่ตรงกับคุณ">
   <title>Upro - ร้านอาหารที่ตรงกับคุณ</title>
 
-  <!-- Meta for adding the site to home screen -->
-  <link rel="manifest" href="/upro/foen_upro/manifest.json">
-  <meta name="theme-color" content="#f37021">
-
-  <!-- For icon (e.g., 192x192 px) -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/logo.png" sizes="32x32">
   <link rel="icon" type="image/png" href="/assets/logo.png" sizes="192x192">
   <link rel="apple-touch-icon" href="/assets/logo.png">
+  <!-- Optional: สำหรับเบราว์เซอร์เก่ามาก -->
+  <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
 
+  <link rel="manifest" href="/upro/foen_upro/manifest.json">
+  <meta name="theme-color" content="#f37021">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
+
 
 <script>
   // ตรวจว่า URL มีพิกัดหรือยัง

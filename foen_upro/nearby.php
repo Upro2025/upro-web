@@ -218,7 +218,6 @@ $data = $filtered; // ผลลัพธ์ที่กรองตามเง�
   </form>
 </section>
 
-<br>
   <!-- Google Ads #1 -->
   <div class="max-w-7xl mx-auto px-4 overflow-hidden" >
   <img src="assets/4.png" alt="แบนเนอร์ 4"
